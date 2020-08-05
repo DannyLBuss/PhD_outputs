@@ -8,7 +8,9 @@ Assign_Taxonomy<-function(df,refFASTA){
   }
   names(tmp)<-names_keep
   tmp<-toupper(tmp)
-  spec<- assignTaxonomy(tmp, refFASTA)
+  spec<- assignTaxonomy(tmp, refFASTA, tryRC=TRUE, minBoot=30)
+  spec[1:20]
+  
   taxa.print <- spec # Removing sequence rownames for display only
   rownames(taxa.print) <- NULL
   #a<-data.frame(taxa.print)
@@ -18,9 +20,10 @@ Assign_Taxonomy<-function(df,refFASTA){
   t<-unlist(taxa.print)
   meta_tax<-data.frame(names_keep,tmp,t)
   meta_tax$sample_size<-as.numeric(sub(".*size=","",names_keep))
-  meta_tax$loci<-as.character(sub("\\..*","",names_keep))
-  meta_tax$sample<-as.character(sub("\\_.*","",names_keep))
-  char<-as.character(sub(".*\\.","",names_keep))
+  names_keepb<-sub("centroid=centroid*.","",names_keep)
+  meta_tax$loci<-as.character(sub("\\..*","",names_keepb))
+  meta_tax$sample<-as.character(sub("\\_.*","",names_keepb))
+  char<-as.character(sub(".*\\.","",names_keepb))
   meta_tax$seq_num<-as.numeric(sub("\\;.*","",char))
   rm(char)
   meta_tax$vsearchname<-as.character(sub("\\;.*","",names(df)))
@@ -28,6 +31,7 @@ Assign_Taxonomy<-function(df,refFASTA){
   char<-as.character(sub(".*seqs=","",names_keep))
   meta_tax$vscentroid_seqs<-as.numeric(sub("\\;.*","",char))
   rm(char)
+  rm(names_keepb)
   Year1<-as.character(c(paste("F",seq(1:17))))
   Year1<-gsub(" ","",Year1)
   Year2<-as.character(c(paste("F",seq(18,24))))

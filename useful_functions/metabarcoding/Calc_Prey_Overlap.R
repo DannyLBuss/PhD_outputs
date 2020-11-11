@@ -1,6 +1,6 @@
 calc_overlap_prey<-function(df_pred,df_prey){
   sample_C_TEF<-rnorm(100,mean=1.28,sd=0.38)
-  sample_N_TEF<-rnorm(100,mean=1.52,sd=0.3)
+  sample_N_TEF<-rnorm(100,mean=2.52,sd=0.3)
   df1<-rep(0.00,15)
   df1<-list(df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,
             df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,df1,
